@@ -389,6 +389,27 @@
         color: var(--muted);
         margin-top: 6px;
       }
+      .nav-button {
+        display: block;
+        width: fit-content;
+        margin: 40px auto;
+        background: red;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 25px 50px;
+        border-radius: 20px;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+        transition: all 0.3s ease;
+      }
+
+      .nav-button:hover {
+        background: #ff4d4d;
+        transform: scale(1.05);
+        box-shadow: 0 0 35px rgba(255, 120, 120, 0.9);
+      }
 
       @media (max-width: 768px) {
         h1 {
@@ -406,6 +427,8 @@
   <body>
     <div class="container">
       <h1>📐 Линейные уравнения</h1>
+
+      <a href="index.html" class="nav-button">⬅ Вернуться к Варианту 1</a>
 
       <div class="student-info">
         <div class="student-name">

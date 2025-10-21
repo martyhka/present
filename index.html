@@ -210,6 +210,28 @@
         color: var(--muted);
         padding: 24px;
       }
+      .nav-button {
+        display: block;
+        width: fit-content;
+        margin: 40px auto;
+        background: red;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 25px 50px;
+        border-radius: 20px;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+        transition: all 0.3s ease;
+      }
+
+      .nav-button:hover {
+        background: #ff4d4d;
+        transform: scale(1.05);
+        box-shadow: 0 0 35px rgba(255, 120, 120, 0.9);
+      }
+
       /* --- Collapsible works --- */
       .work-toggle {
         width: 100%;
@@ -246,6 +268,7 @@
   </head>
   <body>
     <header>
+      <a href="versia2.html" class="nav-button">Перейти к Варианту 2 ➜</a>
       <h1>Линейные уравнения</h1>
       <p class="sub">
         Три обучающих видео по теме и проверочные работы на 3 задания.
@@ -628,6 +651,14 @@
         <div class="result"></div>
         <button class="check-work">Проверить работу</button>
       </article>
+
+      <a
+        href="versia2.html"
+        class="test-button"
+        style="max-width: 260px; display: inline-flex"
+      >
+        Вариант 2
+      </a>
 
       <article class="work" id="v3-self-1" data-work="v3-self-1">
         <h2>Самостоятельная №3.1</h2>
