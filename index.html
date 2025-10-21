@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Линейные уравнения — Видео и проверочные работы</title>
+    <style>
+      :root {
+        --bg: #0f172a; /* slate-900 */
+        --card: #111827; /* gray-900 */
+        --text: #e5e7eb; /* gray-200 */
+        --muted: #9ca3af; /* gray-400 */
+        --accent: #60a5fa; /* blue-400 */
+        --ok: #22c55e; /* green-500 */
+        --warn: #f59e0b; /* amber-500 */
+        --bad: #ef4444; /* red-500 */
+        --border: #1f2937; /* gray-800 */
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(
+          1200px 600px at 50% -10%,
+          #1f2937,
+          var(--bg)
+        );
+        color: var(--text);
+      }
+      header {
+        text-align: center;
+        padding: 32px 16px 16px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin: 0;
+        font-size: 36px;
+        letter-spacing: 0.3px;
+      }
+      p.sub {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .videos {
+        display: grid;
+        gap: 16px;
+        justify-content: center;
+        padding: 24px 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+        grid-template-columns: repeat(3, minmax(260px, 1fr));
+      }
+      @media (max-width: 980px) {
+        .videos {
+          grid-template-columns: repeat(2, minmax(260px, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        .videos {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+      }
+      .card-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 600;
+      }
+      .frame {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        display: block;
+        border: none;
+      }
+      .links {
+        padding: 12px 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .links a {
+        text-decoration: none;
+        color: var(--accent);
+        background: rgba(96, 165, 250, 0.08);
+        border: 1px solid rgba(96, 165, 250, 0.25);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 14px;
+      }
+      .links a:hover {
+        filter: brightness(1.1);
+      }
+
+      .works {
+        max-width: 900px;
+        margin: 24px auto 80px;
+        padding: 0 16px;
+      }
+      .work {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .work h2 {
+        margin: 0 0 6px;
+        font-size: 22px;
+      }
+      .work p.topic {
+        margin: 0 0 14px;
+        color: var(--muted);
+      }
+
+      .task {
+        border-top: 1px dashed var(--border);
+        padding-top: 12px;
+        margin-top: 12px;
+      }
+      .task:first-of-type {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+      }
+      .task label {
+        display: block;
+        margin-bottom: 6px;
+      }
+      .answer-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      input[type="number"],
+      input[type="text"] {
+        background: #0b1020;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 10px;
+        width: 160px;
+      }
+      button {
+        background: var(--accent);
+        color: #071426;
+        border: none;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:hover {
+        filter: brightness(1.1);
+      }
+
+      .result {
+        margin-top: 12px;
+        font-weight: 600;
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+      .grade-3 {
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid #f59e0b;
+        color: #fcd34d;
+      }
+      .grade-4 {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid #22c55e;
+        color: #86efac;
+      }
+      .grade-5 {
+        background: rgba(96, 165, 250, 0.12);
+        border: 1px solid #60a5fa;
+        color: #bfdbfe;
+      }
+      .note {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 24px;
+      }
+      /* --- Collapsible works --- */
+      .work-toggle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px;
+        margin: -8px -8px 8px;
+        background: rgba(96, 165, 250, 0.08);
+        border: 1px solid rgba(96, 165, 250, 0.25);
+        border-radius: 12px;
+        color: var(--text);
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .work-toggle:hover {
+        filter: brightness(1.1);
+      }
+      .work-toggle .chev {
+        transition: transform 0.2s ease;
+      }
+      .work.collapsed .work-toggle .chev {
+        transform: rotate(-90deg);
+      }
+
+      .work-body {
+        margin-top: 10px;
+      }
+      .work.collapsed .work-body {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Линейные уравнения</h1>
+      <p class="sub">
+        Три обучающих видео по теме и проверочные работы на 3 задания.
+      </p>
+    </header>
+
+    <!-- Видеоблоки по центру -->
+    <section class="videos">
+      <article class="card">
+        <div class="card-header">Введение в линейные уравнения</div>
+        <iframe
+          class="frame"
+          src="https://rutube.ru/play/embed/a5758ea9b29d6e41072562da273834c2"
+          title="Видео 1"
+          allowfullscreen
+        ></iframe>
+        <div class="links">
+          <a href="#v1-test-1">Проверочная №1.1</a>
+          <a href="#v1-test-2">Проверочная №1.2</a>
+          <a href="#v1-self-1">Самостоятельная №1.1</a>
+          <a href="#v1-self-2">Самостоятельная №1.2</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-header">Решение уравнений со скобками</div>
+        <iframe
+          class="frame"
+          src="https://rutube.ru/play/embed/a5758ea9b29d6e41072562da273834c2"
+          title="Видео 2"
+          allowfullscreen
+        ></iframe>
+        <div class="links">
+          <a href="#v2-test-1">Проверочная №2.1</a>
+          <a href="#v2-test-2">Проверочная №2.2</a>
+          <a href="#v2-self-1">Самостоятельная №2.1</a>
+          <a href="#v2-self-2">Самостоятельная №2.2</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-header">Уравнения с дробями</div>
+        <iframe
+          class="frame"
+          src="https://rutube.ru/play/embed/ac66987cbffff3b5b976fa7706c002ce"
+          title="Видео 3"
+          allowfullscreen
+        ></iframe>
+        <div class="links">
+          <a href="#v3-test-1">Проверочная №3.1</a>
+          <a href="#v3-test-2">Проверочная №3.2</a>
+          <a href="#v3-self-1">Самостоятельная №3.1</a>
+          <a href="#v3-self-2">Самостоятельная №3.2</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-header">Контрольные работы</div>
+        <div class="links">
+          <a href="#ctrl-1">Контрольная №1</a>
+          <a href="#ctrl-2">Контрольная №2</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Проверочные работы -->
+    <section class="works" id="works">
+      <!-- VIDEO 1: Проверочные (2) и Самостоятельные (2) -->
+      <article class="work" id="v1-test-1" data-work="v1-test-1">
+        <h2>Проверочная №1.1</h2>
+        <p class="topic note">Тема: ax + b = c (базовый)</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>2x + 5 = 17</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" placeholder="x = ?" /><button
+              class="check-one"
+            >
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>4x - 7 = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" placeholder="x = ?" /><button
+              class="check-one"
+            >
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>3x + 9 = 0</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" placeholder="x = ?" /><button
+              class="check-one"
+            >
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v1-test-2" data-work="v1-test-2">
+        <h2>Проверочная №1.2</h2>
+        <p class="topic note">Тема: со скобками</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>3(x - 2) = 9</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>5(x + 1) - 2x = 7</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>2(x - 4) + x = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v1-self-1" data-work="v1-self-1">
+        <h2>Самостоятельная №1.1</h2>
+        <p class="topic note">Тема: ax + b = c</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>x + 5 = 12</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>3x - 9 = 0</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>2x + 6 = 10</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v1-self-2" data-work="v1-self-2">
+        <h2>Самостоятельная №1.2</h2>
+        <p class="topic note">Тема: со скобками</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>2(x - 3) = 8</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>4x - (x + 5) = 10</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>5(x + 2) - 3(x - 1) = 20</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <!-- VIDEO 2 -->
+      <article class="work" id="v2-test-1" data-work="v2-test-1">
+        <h2>Проверочная №2.1</h2>
+        <p class="topic note">Тема: со скобками</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>3(x + 1) = 12</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>2(x - 4) + 6 = 0</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>7 - 2x = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v2-test-2" data-work="v2-test-2">
+        <h2>Проверочная №2.2</h2>
+        <p class="topic note">Тема: дробные</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>x/4 + 2 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>(2x - 3)/5 = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x - 2)/3 + (x + 1)/6 = 3</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v2-self-1" data-work="v2-self-1">
+        <h2>Самостоятельная №2.1</h2>
+        <p class="topic note">Тема: базовые</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>x/3 - 2 = -1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>5x + 10 = 0</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x + 4)/2 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v2-self-2" data-work="v2-self-2">
+        <h2>Самостоятельная №2.2</h2>
+        <p class="topic note">Тема: повышенный</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>(3x - 2)/4 - (x + 1)/2 = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>(x - 5)/3 + (2x + 1)/6 = 2</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>2(x + 1) - (x - 4)/2 = 9</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <!-- VIDEO 3 -->
+      <article class="work" id="v3-test-1" data-work="v3-test-1">
+        <h2>Проверочная №3.1</h2>
+        <p class="topic note">Тема: дробные</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>x/3 + 2 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>(2x - 1)/5 = 3</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x - 4)/2 + (x + 2)/4 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v3-test-2" data-work="v3-test-2">
+        <h2>Проверочная №3.2</h2>
+        <p class="topic note">Тема: смешанные</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>2x - 7 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>3(x + 2) - x = 14</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x + 5)/2 - x/4 = 2</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v3-self-1" data-work="v3-self-1">
+        <h2>Самостоятельная №3.1</h2>
+        <p class="topic note">Тема: базовые</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>x + 4 = 10</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>6x - 12 = 0</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x - 1)/2 = 4</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="v3-self-2" data-work="v3-self-2">
+        <h2>Самостоятельная №3.2</h2>
+        <p class="topic note">Тема: повышенный</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>(x - 3)/4 + (x + 1)/8 = 2</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>4(x - 1) - (x + 2) = 9</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(2x + 3)/5 = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <!-- Контрольные (2) общие -->
+      <article class="work" id="ctrl-1" data-work="ctrl-1">
+        <h2>Контрольная №1</h2>
+        <p class="topic note">Тема: смешанные</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>(x - 4)/2 + (x + 2)/4 = 5</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>5(x + 2) - 3(x - 1) = 20</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x - 5)/3 + (2x + 1)/6 = 2</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+
+      <article class="work" id="ctrl-2" data-work="ctrl-2">
+        <h2>Контрольная №2</h2>
+        <p class="topic note">Тема: со скобками и дробями</p>
+        <div class="task" data-idx="0">
+          <label>1) <strong>(3x - 2)/4 - (x + 1)/2 = 1</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="1">
+          <label>2) <strong>2(x + 1) - (x - 4)/2 = 9</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="task" data-idx="2">
+          <label>3) <strong>(x + 5)/2 - x/4 = 2</strong></label>
+          <div class="answer-row">
+            <input type="number" step="any" /><button class="check-one">
+              Проверить задание</button
+            ><span class="feedback note"></span>
+          </div>
+        </div>
+        <div class="result"></div>
+        <button class="check-work">Проверить работу</button>
+      </article>
+    </section>
+
+    <footer>© Линейные уравнения — проверочные работы</footer>
+
+    <script>
+      // Ответы для каждой работы (по порядку заданий)
+      const ANSWERS = {
+        'v1-test-1': [6, 2, -3],
+        'v1-test-2': [5, 2, 3],
+        'v1-self-1': [7, 3, 2],
+        'v1-self-2': [7, 5, 3.5],
+
+        'v2-test-1': [3, 1, 3],
+        'v2-test-2': [12, 4, 7],
+        'v2-self-1': [3, -2, 6],
+        'v2-self-2': [8, 5.25, 10/3],
+
+        'v3-test-1': [9, 8, 6],
+        'v3-test-2': [6, 4, 8],
+        'v3-self-1': [6, 2, 9],
+        'v3-self-2': [8, 13/2, 4],
+
+        'ctrl-1': [6, 3.5, 5],
+        'ctrl-2': [8, 10/3, 4]
+      }; 4x-7=1 => 2; 3x+9=0 => -3
+        2: [5, 2, 3],             // 3(x-2)=9 => 5; 5(x+1)-2x=7 => 2; 2(x-4)+x=1 => 3
+        3: [9, 8, 6]              // x/3+2=5 => 9; (2x-1)/5=3 => 8; (x-4)/2+(x+2)/4=5 => 6
+      };
+
+      // Сравнение с допуском для чисел с плавающей точкой
+      const nearlyEqual = (a, b, eps = 1e-6) => Math.abs(a - b) <= eps;
+
+      // Проверка отдельного задания
+      function checkSingleTask(taskEl, correctValue) {
+        const input = taskEl.querySelector('input');
+        const fb = taskEl.querySelector('.feedback');
+        const raw = input.value.trim().replace(',', '.');
+        const val = Number(raw);
+        if (raw === '' || Number.isNaN(val)) {
+          fb.textContent = 'Введите число';
+          fb.style.color = '#fca5a5';
+          return false;
+        }
+        const ok = nearlyEqual(val, correctValue);
+        fb.textContent = ok ? 'Верно' : `Неверно (правильный ответ: x = ${correctValue})`;
+        fb.style.color = ok ? '#86efac' : '#fca5a5';
+        return ok;
+      }
+
+      // Итоговая оценка по правилу: 1 верно → "3", 2 верно → "4", 3 верно → "5"
+      function gradeByCorrectCount(k) {
+        if (k <= 0) return { label: '0 верных — оценка не выставлена', cls: '' };
+        if (k === 1) return { label: '1 верное — оценка: ', mark: '3', cls: 'grade-3' };
+        if (k === 2) return { label: '2 верных — оценка: ', mark: '4', cls: 'grade-4' };
+        return { label: '3 верных — оценка: ', mark: '5', cls: 'grade-5' };
+      }
+
+      function checkWork(workEl) {
+        const workKey2 = workEl.dataset.work;
+        const tasks = [...workEl.querySelectorAll('.task')];
+        let correct = 0;
+        tasks.forEach((taskEl, idx) => {
+          const ok = checkSingleTask(taskEl, ANSWERS[workKey][idx]);
+          if (ok) correct++;
+        });
+        const resEl = workEl.querySelector('.result');
+        const g = gradeByCorrectCount(correct);
+        if (!g.mark) {
+          resEl.innerHTML = '<span class="note">Нет верных ответов. Попробуйте ещё раз.</span>';
+        } else {
+          resEl.innerHTML = `<span>${g.label}</span> <span class="badge ${g.cls}">${g.mark}</span>`;
+        }
+      }
+
+      // Навешиваем обработчики
+      document.querySelectorAll('.work').forEach(workEl => {
+        // Кнопка "Проверить работу"
+        workEl.querySelector('.check-work').addEventListener('click', () => checkWork(workEl));
+
+        // Кнопки "Проверить задание"
+        const workKey = workEl.dataset.work;
+        workEl.querySelectorAll('.task').forEach(taskEl => {
+          const idx = Number(taskEl.dataset.idx);
+          taskEl.querySelector('.check-one').addEventListener('click', () => {
+            checkSingleTask(taskEl, ANSWERS[workKey][idx]);
+          });
+        });
+      });
+        // --- Collapsible blocks: create toggle buttons and wrap bodies ---
+      (function setupCollapsible() {
+        document.querySelectorAll('.work').forEach(workEl => {
+          // Collect header texts
+          const titleEl = workEl.querySelector('h2');
+          const topicEl = workEl.querySelector('.topic');
+          const title = titleEl ? titleEl.textContent.trim() : `Проверочная работа`;
+          let topic = topicEl ? topicEl.textContent.trim() : '';
+          if (topic.toLowerCase().startsWith('тема:')) {
+            const idx = topic.indexOf(':');
+            topic = topic.slice(idx + 1).trim();
+          }
+
+          // Create toggle button
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'work-toggle';
+          btn.innerHTML = `<span>${title}</span><span class="chev">▾</span>`;
+
+          // Build body wrapper: move all nodes after topic into .work-body
+          const body = document.createElement('div');
+          body.className = 'work-body';
+          // Nodes to move: everything after topicEl (or after titleEl if topic missing)
+          const startFrom = topicEl || titleEl;
+          let n = startFrom.nextSibling;
+          const toMove = [];
+          while (n) { const next = n.nextSibling; toMove.push(n); n = next; }
+          toMove.forEach(node => body.appendChild(node));
+
+          // Insert button and body
+          startFrom.after(btn);
+          btn.after(body);
+
+          // Default collapsed
+          workEl.classList.add('collapsed');
+
+          // Toggle logic
+          btn.addEventListener('click', () => {
+            workEl.classList.toggle('collapsed');
+          });
+        });
+
+        // If URL hash points to a work (e.g., #work-2), expand it
+        function openHashTarget() {
+          const id = location.hash.replace('#','');
+          if (!id) return;
+          const target = document.getElementById(id);
+          if (target && target.classList.contains('work')) {
+            target.classList.remove('collapsed');
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+        window.addEventListener('hashchange', openHashTarget);
+        openHashTarget();
+      })();
+    </script>
+  </body>
+</html>

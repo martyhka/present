@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Линейные уравнения — Обучение и проверка</title>
+    <style>
+      :root {
+        --bg1: #2c3e50;
+        --bg2: #34495e;
+        --text: #ecf0f1;
+        --muted: #bdc3c7;
+        --card: rgba(52, 73, 94, 0.85);
+        --border: rgba(236, 240, 241, 0.15);
+        --accent: #1abc9c;
+        --ok: #27ae60;
+        --warn: #dd6b20;
+        --bad: #c53030;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg1) 0%,
+          var(--bg2) 50%,
+          var(--bg1) 100%
+        );
+        color: var(--text);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin: 0 0 40px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .student-info {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .student-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      /* Видеоблоки по центру */
+      .video-section {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        gap: 30px;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+      }
+      .video-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        width: 100%;
+        max-width: 360px;
+      }
+      .video-card:hover {
+        transform: translateY(-5px);
+      }
+      .video-placeholder {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        border: 2px solid #ddd;
+        color: #666;
+      }
+      .video-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+
+      .test-links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .test-button {
+        background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        color: var(--text);
+        border: 1px solid rgba(236, 240, 241, 0.2);
+        padding: 12px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+      .test-button:hover {
+        transform: translateX(4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        border-color: rgba(236, 240, 241, 0.35);
+      }
+      .test-button.active {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        border-color: #1abc9c;
+      }
+      .test-button.completed {
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        border-color: #27ae60;
+      }
+      .test-status {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--ok);
+        color: #fff;
+        font-size: 12px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+      .test-button.completed .test-status {
+        display: flex;
+      }
+      .arrow {
+        transition: transform 0.2s ease;
+      }
+      .test-button.active .arrow {
+        transform: rotate(90deg);
+      }
+
+      /* Контент тестов — центр и ширина */
+      .test-content {
+        background: rgba(52, 73, 94, 0.9);
+        border: 1px solid var(--border);
+        margin: 20px auto;
+        border-radius: 15px;
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: none;
+        animation: slideDown 0.25s ease;
+        width: 100%;
+        max-width: 800px;
+      }
+      .test-content.active {
+        display: block;
+      }
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .test-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin: 0 0 18px;
+        text-align: center;
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 10px;
+      }
+
+      .question {
+        background: rgba(44, 62, 80, 0.65);
+        border-left: 4px solid var(--accent);
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 0 10px 10px 0;
+        border: 1px solid var(--border);
+      }
+      .question-text {
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .answer-input {
+        width: 100%;
+        max-width: 220px;
+        padding: 10px 12px;
+        border: 2px solid rgba(236, 240, 241, 0.3);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: rgba(44, 62, 80, 0.8);
+        color: var(--text);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .answer-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.25);
+      }
+      .answer-input::placeholder {
+        color: rgba(236, 240, 241, 0.6);
+      }
+      .answer-input:disabled {
+        opacity: 0.75;
+        cursor: not-allowed;
+      }
+
+      .check-button {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: #fff;
+        border: none;
+        padding: 14px 22px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 16px auto 0;
+        display: block;
+        transition: transform 0.15s ease, box-shadow 0.2s ease,
+          opacity 0.2s ease;
+      }
+      .check-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(72, 187, 120, 0.35);
+      }
+      .check-button:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+        opacity: 0.85;
+      }
+
+      .result {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 800;
+        padding: 14px;
+        border-radius: 10px;
+        margin-top: 16px;
+        display: none;
+      }
+      .result.show {
+        display: block;
+        animation: fadeIn 0.25s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .grade-2 {
+        background: #ffebee;
+        color: #c62828;
+      }
+      .grade-3 {
+        background: #fed7d7;
+        color: #c53030;
+      }
+      .grade-4 {
+        background: #feebc8;
+        color: #dd6b20;
+      }
+      .grade-5 {
+        background: #c6f6d5;
+        color: #1f6d43;
+      }
+
+      /* Отчёт — центр и сетка */
+      .progress-report {
+        background: rgba(52, 73, 94, 0.9);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 50px auto 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        max-width: 1000px;
+      }
+      .progress-title {
+        font-size: 2rem;
+        font-weight: 800;
+        text-align: center;
+        margin: 0 0 15px;
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 12px;
+      }
+      .progress-section {
+        margin-bottom: 24px;
+      }
+      .progress-section h3 {
+        font-size: 1.25rem;
+        margin: 0 0 10px;
+        color: var(--accent);
+      }
+      .progress-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        background: rgba(44, 62, 80, 0.6);
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+      }
+      .progress-item.completed {
+        border-left-color: var(--ok);
+      }
+      .progress-item.not-completed {
+        border-left-color: #95a5a6;
+        opacity: 0.8;
+      }
+      .progress-grade {
+        font-weight: 800;
+        padding: 6px 10px;
+        border-radius: 6px;
+        min-width: 44px;
+        text-align: center;
+        color: #fff;
+      }
+      .grade-badge-2 {
+        background: #c62828;
+      }
+      .grade-badge-3 {
+        background: #c53030;
+      }
+      .grade-badge-4 {
+        background: #dd6b20;
+      }
+      .grade-badge-5 {
+        background: #229954;
+      }
+
+      .overall-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+      }
+      .stat-card {
+        background: rgba(44, 62, 80, 0.6);
+        padding: 18px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .stat-label {
+        font-size: 0.95rem;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+        .container {
+          padding: 0 10px;
+        }
+        .video-section {
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📐 Линейные уравнения</h1>
+
+      <div class="student-info">
+        <div class="student-name">
+          Ученик: <span id="studentName">Иван Петров</span>
+        </div>
+        <div>Класс: 7А • Дата: <span id="currentDate"></span></div>
+      </div>
+
+      <div class="video-section">
+        <div class="video-card">
+          <div class="video-title">Основы линейных уравнений</div>
+          <div class="video-placeholder">
+            🎥<br />Видео урок 1<br /><small
+              >Что такое линейное уравнение</small
+            >
+          </div>
+          <div class="test-links">
+            <button class="test-button" onclick="toggleTest('test1')">
+              <span>Проверочная работа №1</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button class="test-button" onclick="toggleTest('test2')">
+              <span>Проверочная работа №2</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-title">Методы решения</div>
+          <div class="video-placeholder">
+            🎥<br />Видео урок 2<br /><small>Способы решения</small>
+          </div>
+          <div class="test-links">
+            <button class="test-button" onclick="toggleTest('test3')">
+              <span>Проверочная работа №3</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button class="test-button" onclick="toggleTest('test4')">
+              <span>Проверочная работа №4</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-title">Практические задачи</div>
+          <div class="video-placeholder">
+            🎥<br />Видео урок 3<br /><small>Применение на практике</small>
+          </div>
+          <div class="test-links">
+            <button class="test-button" onclick="toggleTest('test5')">
+              <span>Проверочная работа №5</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button class="test-button" onclick="toggleTest('test6')">
+              <span>Проверочная работа №6</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Самостоятельные и контрольные кнопки -->
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 60px;
+          margin: 40px 0;
+          flex-wrap: wrap;
+        "
+      >
+        <div style="text-align: center">
+          <h2 style="margin-bottom: 16px">Самостоятельные работы</h2>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 12px;
+            "
+          >
+            <button
+              class="test-button"
+              onclick="toggleTest('test7')"
+              style="width: 300px"
+            >
+              <span>Самостоятельная работа №1</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button
+              class="test-button"
+              onclick="toggleTest('test8')"
+              style="width: 300px"
+            >
+              <span>Самостоятельная работа №2</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button
+              class="test-button"
+              onclick="toggleTest('test9')"
+              style="width: 300px"
+            >
+              <span>Самостоятельная работа №3</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+          </div>
+        </div>
+        <div style="text-align: center">
+          <h2 style="margin-bottom: 16px">Контрольные работы</h2>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 12px;
+            "
+          >
+            <button
+              class="test-button"
+              onclick="toggleTest('test10')"
+              style="width: 300px"
+            >
+              <span>Контрольная работа №1</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button
+              class="test-button"
+              onclick="toggleTest('test11')"
+              style="width: 300px"
+            >
+              <span>Контрольная работа №2</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+            <button
+              class="test-button"
+              onclick="toggleTest('test12')"
+              style="width: 300px"
+            >
+              <span>Контрольная работа №3</span><span class="arrow">▶</span
+              ><span class="test-status">✓</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Тесты (контент) — центрируется max-width ===== -->
+      <div class="test-content" id="test1">
+        <div class="test-title">Проверочная работа №1</div>
+        <div class="question">
+          <div class="question-text">1) 2x + 5 = 13</div>
+          <input
+            id="q1_1"
+            class="answer-input"
+            type="number"
+            placeholder="x = ?"
+          />
+        </div>
+        <div class="question">
+          <div class="question-text">2) 3x - 7 = 8</div>
+          <input
+            id="q1_2"
+            class="answer-input"
+            type="number"
+            placeholder="x = ?"
+          />
+        </div>
+        <div class="question">
+          <div class="question-text">3) x + 12 = 20</div>
+          <input
+            id="q1_3"
+            class="answer-input"
+            type="number"
+            placeholder="x = ?"
+          />
+        </div>
+        <button class="check-button" onclick="checkTest('test1',[4,5,8])">
+          Проверить работу
+        </button>
+        <div class="result" id="result1"></div>
+      </div>
+
+      <div class="test-content" id="test2">
+        <div class="test-title">Проверочная работа №2</div>
+        <div class="question">
+          <div class="question-text">1) 4x - 3 = 2x + 7</div>
+          <input id="q2_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) 5x + 2 = 3x + 14</div>
+          <input id="q2_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 6x - 8 = 4x + 2</div>
+          <input id="q2_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test2',[5,6,5])">
+          Проверить работу
+        </button>
+        <div class="result" id="result2"></div>
+      </div>
+
+      <div class="test-content" id="test3">
+        <div class="test-title">Проверочная работа №3</div>
+        <div class="question">
+          <div class="question-text">1) 2(x + 3) = 14</div>
+          <input id="q3_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) 3(x - 2) = 15</div>
+          <input id="q3_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 4(x + 1) = 2x + 10</div>
+          <input id="q3_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test3',[4,7,3])">
+          Проверить работу
+        </button>
+        <div class="result" id="result3"></div>
+      </div>
+
+      <div class="test-content" id="test4">
+        <div class="test-title">Проверочная работа №4</div>
+        <div class="question">
+          <div class="question-text">1) x/2 + 3 = 7</div>
+          <input id="q4_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) x/3 - 2 = 4</div>
+          <input id="q4_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 2x/5 = 6</div>
+          <input id="q4_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test4',[8,18,15])">
+          Проверить работу
+        </button>
+        <div class="result" id="result4"></div>
+      </div>
+
+      <div class="test-content" id="test5">
+        <div class="test-title">Проверочная работа №5</div>
+        <div class="question">
+          <div class="question-text">
+            1) Число утроили и прибавили 5. Получили 23. Найдите число.
+          </div>
+          <input
+            id="q5_1"
+            class="answer-input"
+            type="number"
+            placeholder="число = ?"
+          />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            2) От числа отняли 7 и результат умножили на 2. Получили 18. Найдите
+            число.
+          </div>
+          <input
+            id="q5_2"
+            class="answer-input"
+            type="number"
+            placeholder="число = ?"
+          />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            3) Сумма двух чисел равна 15. Одно число в 2 раза больше другого.
+            Найдите меньшее.
+          </div>
+          <input
+            id="q5_3"
+            class="answer-input"
+            type="number"
+            placeholder="число = ?"
+          />
+        </div>
+        <button class="check-button" onclick="checkTest('test5',[6,16,5])">
+          Проверить работу
+        </button>
+        <div class="result" id="result5"></div>
+      </div>
+
+      <div class="test-content" id="test6">
+        <div class="test-title">Проверочная работа №6</div>
+        <div class="question">
+          <div class="question-text">1) 3(2x - 1) = 2(x + 4) + 1</div>
+          <input id="q6_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) (x + 2)/3 = (x - 1)/2</div>
+          <input id="q6_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 5x - 3(x - 2) = 2x + 8</div>
+          <input id="q6_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test6',[3,8,-2])">
+          Проверить работу
+        </button>
+        <div class="result" id="result6"></div>
+      </div>
+
+      <div class="test-content" id="test7">
+        <div class="test-title">Самостоятельная работа №1</div>
+        <div class="question">
+          <div class="question-text">1) 7x - 4 = 3x + 12</div>
+          <input id="q7_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) 2(x + 5) = 3x - 1</div>
+          <input id="q7_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) x/4 + 2 = 5</div>
+          <input id="q7_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test7',[4,11,12])">
+          Проверить работу
+        </button>
+        <div class="result" id="result7"></div>
+      </div>
+
+      <div class="test-content" id="test8">
+        <div class="test-title">Самостоятельная работа №2</div>
+        <div class="question">
+          <div class="question-text">1) 5(x - 2) = 2x + 7</div>
+          <input id="q8_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) 3x/2 - 1 = 8</div>
+          <input id="q8_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 4x + 3 = 7x - 9</div>
+          <input id="q8_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test8',[5.67,6,4])">
+          Проверить работу
+        </button>
+        <div class="result" id="result8"></div>
+      </div>
+
+      <div class="test-content" id="test9">
+        <div class="test-title">Самостоятельная работа №3</div>
+        <div class="question">
+          <div class="question-text">
+            1) 3кг яблок и 2кг груш — всего 340р. Груши дороже яблок на 20р/кг.
+            Найдите цену яблок.
+          </div>
+          <input
+            id="q9_1"
+            class="answer-input"
+            type="number"
+            placeholder="руб/кг = ?"
+          />
+        </div>
+        <div class="question">
+          <div class="question-text">2) (2x + 1)/3 = (x - 2)/2</div>
+          <input id="q9_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">3) 6x - 2(x + 3) = 3x + 1</div>
+          <input id="q9_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test9',[60,-7,7])">
+          Проверить работу
+        </button>
+        <div class="result" id="result9"></div>
+      </div>
+
+      <div class="test-content" id="test10">
+        <div class="test-title">Контрольная работа №1</div>
+        <div class="question">
+          <div class="question-text">1) 3(2x - 5) = 4(x + 1) - 7</div>
+          <input id="q10_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) (x + 3)/4 - (x - 1)/6 = 1</div>
+          <input id="q10_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            3) Периметр прямоугольника 28 см, длина больше ширины на 4 см.
+            Найдите ширину.
+          </div>
+          <input
+            id="q10_3"
+            class="answer-input"
+            type="number"
+            placeholder="см = ?"
+          />
+        </div>
+        <button class="check-button" onclick="checkTest('test10',[6,9,5])">
+          Проверить работу
+        </button>
+        <div class="result" id="result10"></div>
+      </div>
+
+      <div class="test-content" id="test11">
+        <div class="test-title">Контрольная работа №2</div>
+        <div class="question">
+          <div class="question-text">1) 5x - 2(3x - 4) = 3(x + 2) - 1</div>
+          <input id="q11_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">2) (2x - 1)/5 + (x + 2)/3 = 2</div>
+          <input id="q11_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            3) За 2 часа авто и мотоцикл проехали 300 км. Скорость авто на 10
+            км/ч больше. Найдите скорость мотоцикла.
+          </div>
+          <input
+            id="q11_3"
+            class="answer-input"
+            type="number"
+            placeholder="км/ч = ?"
+          />
+        </div>
+        <button class="check-button" onclick="checkTest('test11',[-3,3,70])">
+          Проверить работу
+        </button>
+        <div class="result" id="result11"></div>
+      </div>
+
+      <div class="test-content" id="test12">
+        <div class="test-title">Контрольная работа №3</div>
+        <div class="question">
+          <div class="question-text">
+            1) 4(x - 2) - 3(2x + 1) = 5 - 2(x + 3)
+          </div>
+          <input id="q12_1" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            2) (3x + 2)/4 - (2x - 3)/6 = (x + 1)/3
+          </div>
+          <input id="q12_2" class="answer-input" type="number" />
+        </div>
+        <div class="question">
+          <div class="question-text">
+            3) Сумма трёх чисел 84. Второе в 2 раза больше первого, третье на 12
+            больше второго. Найдите первое.
+          </div>
+          <input id="q12_3" class="answer-input" type="number" />
+        </div>
+        <button class="check-button" onclick="checkTest('test12',[8,2,12])">
+          Проверить работу
+        </button>
+        <div class="result" id="result12"></div>
+      </div>
+
+      <!-- Отчёт о прогрессе -->
+      <div class="progress-report" id="progressReport">
+        <div class="progress-title">📊 Отчёт о прогрессе ученика</div>
+        <div class="overall-stats">
+          <div class="stat-card">
+            <div class="stat-number" id="completedCount">0</div>
+            <div class="stat-label">Выполнено работ</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="averageGrade">0</div>
+            <div class="stat-label">Средняя оценка</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="excellentCount">0</div>
+            <div class="stat-label">Отличных работ</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="completionPercent">0%</div>
+            <div class="stat-label">Процент выполнения</div>
+          </div>
+        </div>
+        <div class="progress-section">
+          <h3>Проверочные работы</h3>
+          <div id="checkWorksProgress"></div>
+        </div>
+        <div class="progress-section">
+          <h3>Самостоятельные работы</h3>
+          <div id="independentWorksProgress"></div>
+        </div>
+        <div class="progress-section">
+          <h3>Контрольные работы</h3>
+          <div id="controlWorksProgress"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Дата на странице
+      document.getElementById("currentDate").textContent =
+        new Date().toLocaleDateString("ru-RU");
+
+      // Результаты
+      const studentResults = {};
+
+      function toggleTest(testId) {
+        // закрыть прочие
+        document.querySelectorAll(".test-content").forEach((el) => {
+          if (el.id !== testId) el.classList.remove("active");
+        });
+        document.querySelectorAll(".test-button").forEach((btn) => {
+          if (btn.getAttribute("onclick") !== `toggleTest('${testId}')`)
+            btn.classList.remove("active");
+        });
+        // переключить целевой
+        const block = document.getElementById(testId);
+        const btn = document.querySelector(
+          `[onclick="toggleTest('${testId}')"]`
+        );
+        const active = block.classList.toggle("active");
+        btn.classList.toggle("active", active);
+        if (active)
+          block.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // Допуск для сравнения дробей
+      function nearlyEqual(a, b, eps = 1e-2) {
+        return Math.abs(a - b) <= eps;
+      }
+
+      function checkTest(testId, correctAnswers) {
+        const testNumber = testId.replace("test", "");
+        let correctCount = 0;
+        const userAnswers = [];
+
+        for (let i = 1; i <= 3; i++) {
+          const input = document.getElementById(`q${testNumber}_${i}`);
+          const v = parseFloat(
+            (input.value || "").toString().replace(",", ".")
+          );
+          userAnswers.push(v);
+          const ok = !Number.isNaN(v) && nearlyEqual(v, correctAnswers[i - 1]);
+          if (ok) {
+            correctCount++;
+            input.style.borderColor = "#48bb78";
+            input.style.backgroundColor = "#f0fff4";
+          } else {
+            input.style.borderColor = "#f56565";
+            input.style.backgroundColor = "#fff5f5";
+          }
+          input.disabled = true;
+        }
+
+        // Оценка: 0→2, 1→3, 2→4, 3→5
+        let grade = 2;
+        if (correctCount === 1) grade = 3;
+        else if (correctCount === 2) grade = 4;
+        else if (correctCount === 3) grade = 5;
+
+        studentResults[testId] = {
+          grade,
+          correctCount,
+          totalQuestions: 3,
+          userAnswers,
+          correctAnswers,
+          completedAt: new Date().toLocaleString("ru-RU"),
+        };
+
+        const resultDiv = document.getElementById(`result${testNumber}`);
+        const messages = {
+          2: "Неудовлетворительно",
+          3: "Удовлетворительно",
+          4: "Хорошо",
+          5: "Отлично",
+        };
+        resultDiv.innerHTML = `
+        <div>Правильных ответов: ${correctCount} из 3</div>
+        <div>Оценка: ${grade} — ${messages[grade]}</div>
+        <div style="margin-top:10px; font-size:1rem;">${
+          grade === 5
+            ? "🎉 Превосходно!"
+            : grade >= 4
+            ? "👍 Хорошая работа!"
+            : "💪 Продолжайте тренироваться!"
+        }</div>
+      `;
+        resultDiv.className = `result show grade-${grade}`;
+
+        const btn = document.querySelector(
+          `[onclick="toggleTest('${testId}')"]`
+        );
+        btn.classList.add("completed");
+
+        // Блокируем кнопку проверки
+        const checkBtn = resultDiv.previousElementSibling; // сама кнопка
+        if (checkBtn && checkBtn.classList.contains("check-button")) {
+          checkBtn.disabled = true;
+          checkBtn.textContent = "Работа выполнена";
+        }
+
+        updateProgressReport();
+      }
+
+      function updateProgressReport() {
+        const testNames = {
+          test1: "Проверочная №1",
+          test2: "Проверочная №2",
+          test3: "Проверочная №3",
+          test4: "Проверочная №4",
+          test5: "Проверочная №5",
+          test6: "Проверочная №6",
+          test7: "Самостоятельная №1",
+          test8: "Самостоятельная №2",
+          test9: "Самостоятельная №3",
+          test10: "Контрольная №1",
+          test11: "Контрольная №2",
+          test12: "Контрольная №3",
+        };
+
+        const completedIds = Object.keys(studentResults);
+        const totalTests = 12;
+        const completedCount = completedIds.length;
+        const completionPercent = Math.round(
+          (completedCount / totalTests) * 100
+        );
+        let sumGrades = 0;
+        let excellent = 0;
+        completedIds.forEach((id) => {
+          sumGrades += studentResults[id].grade;
+          if (studentResults[id].grade === 5) excellent++;
+        });
+        const avg = completedCount
+          ? (sumGrades / completedCount).toFixed(1)
+          : "0";
+
+        document.getElementById("completedCount").textContent = completedCount;
+        document.getElementById("averageGrade").textContent = avg;
+        document.getElementById("excellentCount").textContent = excellent;
+        document.getElementById(
+          "completionPercent"
+        ).textContent = `${completionPercent}%`;
+
+        updateCategoryProgress(
+          "checkWorksProgress",
+          ["test1", "test2", "test3", "test4", "test5", "test6"],
+          testNames
+        );
+        updateCategoryProgress(
+          "independentWorksProgress",
+          ["test7", "test8", "test9"],
+          testNames
+        );
+        updateCategoryProgress(
+          "controlWorksProgress",
+          ["test10", "test11", "test12"],
+          testNames
+        );
+      }
+
+      function updateCategoryProgress(containerId, testIds, testNames) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+        testIds.forEach((id) => {
+          const item = document.createElement("div");
+          item.className =
+            "progress-item " +
+            (studentResults[id] ? "completed" : "not-completed");
+          if (studentResults[id]) {
+            const r = studentResults[id];
+            item.innerHTML = `
+            <div>
+              <div>${testNames[id]}</div>
+              <small style="color:${getComputedStyle(
+                document.body
+              ).getPropertyValue("--muted")}">Выполнено: ${
+              r.completedAt
+            }</small>
+            </div>
+            <div class="progress-grade grade-badge-${r.grade}">${r.grade}</div>
+          `;
+          } else {
+            item.innerHTML = `
+            <div>${testNames[id]}</div>
+            <div style="color:#95a5a6;">Не выполнено</div>
+          `;
+          }
+          container.appendChild(item);
+        });
+      }
+
+      // Первичная инициализация отчёта
+      updateProgressReport();
+    </script>
+  </body>
+</html>
